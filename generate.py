@@ -81,6 +81,16 @@ ARTICLE_TEMPLATE = """
 </html>
 """.strip()
 
+# (path)
+LOADER_TEMPLATE = """
+<!doctype html>
+<html>
+  <head>
+    <script>window.location.href="%s/index.html"</script>
+  </head>
+</html>
+"""
+
 class Meta:
     def __init__(self, read_time):
         self.date = datetime.today().strftime("%d.%m.%Y")
@@ -147,6 +157,10 @@ def main():
     print(f"info: generating main page html at '{output_directory + '/index.html'}'")
     with open(output_directory + "/" + "index.html", "w") as main_page_file:
         main_page_file.write(main_page_html)
+    
+    print(f"info: generating loader html at 'index.html'")
+    with open("index.html", "w") as loader_file:
+        loader_file.write(LOADER_TEMPLATE % (output_directory))
 
 if __name__ == "__main__":
     main()
