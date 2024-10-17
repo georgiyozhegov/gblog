@@ -1,10 +1,24 @@
+:root {
+  --very-dark-green: #283618;
+  --dark-green: #3a5a40;
+  --green: #588157;
+  --light-green: #a3b18a;
+  --light: #dad7cd;
+}
+
+body {
+  background-color: var(--light-green);
+}
+
 h1 {
-  font-family: monospace;
+  font-family: "Press Start 2P";
+  color: var(--very-dark-green);
   text-align: center;
+  padding-bottom: 20px;
 }
 
 .g {
-  color: green;
+  color: var(--green);
 }
 
 .feed {
@@ -18,19 +32,29 @@ h1 {
 }
 
 .article-preview_title {
-  font-family: monospace;
-  color: green;
+  font-family: "Press Start 2P";
+  font-size: 16px;
+  color: var(--green);
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.article-preview_meta {
+  padding-top: 1px;
 }
 
 .article-preview_meta_item {
-  font-family: monospace;
-  opacity: 80%;
+  font-family: "Press Start 2P";
+  font-size: 9px;
+  opacity: 50%;
 }
 
 .article-preview_link {
-  font-family: monospace;
-  color: black;
+  font-family: "Press Start 2P";
+  font-size: 12px;
+  color: var(--very-dark-green);
   padding: 0;
+  padding-top: 4px;
   border: none;
   background: none;
 }
@@ -45,7 +69,8 @@ h1 {
 }
 
 .ps_inner {
-  font-family: monospace;
+  font-family: "Press Start 2P";
+  color: var(--green);
   opacity: 60%;
 }
 
@@ -57,11 +82,13 @@ h1 {
 }
 
 .article_navigation_back {
-  font-family: monospace;
-  color: black;
+  font-family: "Press Start 2P";
+  font-size: 12px;
+  color: var(--very-dark-green);
   padding: 0;
   border: none;
   background: none;
+  padding-bottom: 10px;
 }
 
 .article_navigation_back:hover {
@@ -70,14 +97,39 @@ h1 {
 }
 
 .article_content {
-  padding-top: 10px;
+  font-family: "Press Start 2P";
+  font-size: 9px;
+  padding-top: 1px;
 }
 
 .article_content h2 {
-  font-family: monospace;
-  color: green;
+  font-size: 16px;
+  color: var(--green);
+  padding-bottom: 5px;
 }
 
 .article_content p {
+  padding-bottom: 5px;
+}
+
+.article_content code {
   font-family: monospace;
+  font-size: 14px;
+  background-color: var(--light);
+  border-radius: 10px;
+  padding-bottom: 5px;
+}
+
+.article_content img {
+  border-radius: 10px;
+  padding-bottom: 5px;
+}
+
+.article_content li {
+  padding-bottom: 5px;
+}
+
+hr {
+  color: var(--very-dark-green);
+  opacity: 60%;
 }

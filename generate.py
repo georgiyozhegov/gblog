@@ -10,6 +10,9 @@ PAGE_TEMPLATE = """
   <head>
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   </head>
   <body>
     <h1><span class="g">G</span>Блог</h1>
@@ -27,6 +30,7 @@ PAGE_TEMPLATE = """
 ARTICLE_PREVIEW_TEMPLATE = """
 <div class="article-preview">
   <h2 class="article-preview_title">%s</h2>
+  <hr>
   <div class="article-preview_inner">
     <div class="article-preview_meta">
 %s
@@ -57,6 +61,9 @@ ARTICLE_TEMPLATE = """
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/rust.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/python.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   </head>
   <body>
     <h1><span class="g">G</span>Блог</h1>
@@ -64,6 +71,7 @@ ARTICLE_TEMPLATE = """
       <div class="article_navigation">
         <button class="article_navigation_back" onclick="window.location.href='../index.html'">Назад</button>
       </div>
+      <hr>
       <div class="article_content">
 %s
       </div>
