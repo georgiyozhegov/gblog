@@ -1,0 +1,83 @@
+h1 {
+  font-family: monospace;
+  text-align: center;
+}
+
+.g {
+  color: green;
+}
+
+.feed {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.article-preview {
+  padding-bottom: 20px;
+}
+
+.article-preview_title {
+  font-family: monospace;
+  color: green;
+}
+
+.article-preview_meta_item {
+  font-family: monospace;
+  opacity: 80%;
+}
+
+.article-preview_link {
+  font-family: monospace;
+  color: black;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.article-preview_link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.ps {
+  text-align: center;
+}
+
+.ps_inner {
+  font-family: monospace;
+  opacity: 60%;
+}
+
+.article {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+}
+
+.article_navigation_back {
+  font-family: monospace;
+  color: black;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.article_navigation_back:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.article_content {
+  padding-top: 10px;
+}
+
+.article_content h2 {
+  font-family: monospace;
+  color: green;
+}
+
+.article_content p {
+  font-family: monospace;
+}
