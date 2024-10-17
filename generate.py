@@ -9,6 +9,7 @@ PAGE_TEMPLATE = """
 <html>
   <head>
     <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   </head>
   <body>
     <h1><span class="g">G</span>Блог</h1>
@@ -51,6 +52,7 @@ ARTICLE_TEMPLATE = """
 <html>
   <head>
     <link rel="stylesheet" href="../style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   </head>
   <body>
     <h1><span class="g">G</span>Блог</h1>
@@ -120,7 +122,7 @@ def main():
         content = content.strip()
 
         with open(output_directory + "/" + output_file_path, "w") as file:
-            content_html = markdown.markdown(content, extensions=["markdown.extensions.fenced_code", "markdown.extensions.codehilite"])
+            content_html = markdown.markdown(content, extensions=["markdown.extensions.fenced_code"])
             file.write(ARTICLE_TEMPLATE % (content_html))
         
         read_time = int((len(file_content) / 5.28) / 250)
