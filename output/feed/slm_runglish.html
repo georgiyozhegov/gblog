@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/rust.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/python.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <h1><span class="g">G</span>Блог</h1>
+    <div class="article">
+      <div class="article_navigation">
+        <button class="article_navigation_back" onclick="window.location.href='../index.html'">Назад</button>
+      </div>
+      <hr>
+      <div class="article_content">
+<p>Некоторое время назад я пробовал новые SLMs и заметил такую проблему:</p>
+<pre><code class="language-shell">&gt;&gt;&gt; Напиши сказку о Бибе и Бобе
+ВonderFUL, что bạn хотела бы saber contar una historia con Bibe y Bobe!
+
+Здесь есть сказка, которую яWould любить compartir с você:
+
+Всёгде по всей стране, где бы ни был человек,
+Было Бобы, и Биба, которые пришли к его месте.
+У них было добро, и ils were happy too.
+
+...
+</code></pre>
+<p>И ещё:</p>
+<pre><code class="language-shell">&gt;&gt;&gt; Кто является президентом России?
+Сtober 2020 года presidente Российской Федерации — Володимир Путин.
+</code></pre>
+<p>Мягко говоря, не очень. При ответе языковая модель смешивает языки и получается runglish. </p>
+<h2>И что делать?</h2>
+<p>Как собственно решить эту проблему?</p>
+<p>Я не смог найти высказывание умного человека на Reddit, Habr и во всем остальном интернете, так что мне придется самому искать причину сего поведения и его решения.</p>
+<h2>Возможные решения</h2>
+<ul>
+<li>Задавать четкий системный промпт на одном языке.</li>
+<li>Так как я использую Ollama для инференса, я могу подкрутить какие-то параметры типа temperature или repeat_penalty.</li>
+<li>Я могу просто использовать модель побольше.</li>
+</ul>
+<h2>Четкий промпт</h2>
+<p>Для этого создаём Modelfile, и прописываем системный промпт на русском языке:</p>
+<pre><code>FROM llama3.2:1b
+
+SYSTEM &quot;Ты - умный чатбот. Твоя задача помогать людям во всех их просьбах.&quot;
+</code></pre>
+<p>Загружаем его:</p>
+<pre><code class="language-shell">ollama create llama3.2-ru:1b -f Modelfile
+</code></pre>
+<p>И запускаем:</p>
+<pre><code class="language-shell">&gt;&gt;&gt; Кто является президентом России?
+С today's knowledge cutoff I do not have the most current information about the president of Russia. However, as of my last update in 2023, Vladimir Putin remained the President of Russia.
+</code></pre>
+<p>Ммм, лучше не стало. Грусть, боль, и печаль.</p>
+<h2>Подкручиваем параметры</h2>
+<p>Для этого используем все тот же Modelfile:</p>
+<pre><code>FROM llama3.2:1b
+
+SYSTEM &quot;Ты - умный чатбот. Твоя задача помогать людям во всех их просьбах.&quot;
+
+PARAMETER temperature 0.3
+</code></pre>
+<p>Запускаем:</p>
+<pre><code class="language-shell">&gt;&gt;&gt; Кто является президентом России?
+Проблема не существует.Russia still has a president, Vladimir Putin.
+</code></pre>
+<p>Ну, уже лучше (нет).</p>
+<h2>Берем модельку побольше</h2>
+<p>Все это время я мучал Llama 3.2 на 1 миллиард параметров.</p>
+<p>Может просто нужно смириться с тем, что настолько маленькая модель просто не может не смешивать языки из обучающей выборки. А так как английского в обучающей выборке гораздо больше, она переключается с русского на английский.</p>
+<p>Я посмотрел новые open-source модели и выбрал три варианта (на рандом):</p>
+<ul>
+<li>Та же Llama 3.2, но на 3 миллиарда параметров.</li>
+<li>Qwen 2.5 на 3 миллиарда параметров.</li>
+<li>И Qwen 2.5 на 7 миллиардов.</li>
+</ul>
+<p>Скачиваем (~9 гигов) и пробуем:</p>
+<ul>
+<li>Llama 3.2 3B: <strong>Pass</strong></li>
+</ul>
+<pre><code class="language-shell">&gt;&gt;&gt; Кто является президентом России?
+Президентом России является Владимир Путин.
+</code></pre>
+<ul>
+<li>Qwen 2.5 3B: <strong>Pass</strong></li>
+</ul>
+<pre><code class="language-shell">&gt;&gt;&gt; Кто является президентом России?
+На данный момент президентом Российской Федерации является Владимир Путин.
+</code></pre>
+<ul>
+<li>Qwen 2.5 7B: <strong>Pass</strong></li>
+</ul>
+<pre><code class="language-shell">&gt;&gt;&gt; Кто является президентом России? 
+Президентом Российской Федерации является Владимир Путин. Он вступил в должность 7 мая 2012 года и был переизбран на новый срок в 2018 году. Однако ситуация может меняться, поэтому для получения наиболее актуальной информации 
+рекомендуется проверить последние новости из надежных источников.
+</code></pre>
+<h2>Вывод</h2>
+<p>Модели размером меньше 3 миллиардов параметров просто не могут выполнять даже базовые задачи. <strong>Размер имеет значение</strong>.</p>
+<p>Вот кстати анимация от Google, описывающая влияние размера на способности:</p>
+<p><img alt="" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgLXCWMlipdu0gFF6hsiJHbxg1zSaEkdDWfl-8RakQuW__8RPvlOS9KGIScNCytxT4jz9isnx0GLMwbS1G0Q4WdXzT42GszgfwIIAVX1H3J-43lVWWqcb--q9cPsxCsJFFz2dRfpKgEmLe-xfIyBqQuPq1BPYcK9CtAK1_xnhgvgAAx0GeZmODJxGNMYQ/s16000/image8.gif" /></p>
+<p>При увеличении размеров (параметров) модели, её способности пропорционально растут.</p>
+      </div>
+    </div>
+    <script>hljs.highlightAll();</script>
+  </body>
+</html>

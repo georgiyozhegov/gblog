@@ -123,6 +123,9 @@ h1 {
 .article_content img {
   border-radius: 10px;
   padding-bottom: 5px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .article_content li {
